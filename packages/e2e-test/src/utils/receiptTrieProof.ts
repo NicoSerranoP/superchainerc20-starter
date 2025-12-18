@@ -1,7 +1,13 @@
 import { createMerkleProof, createMPT } from '@ethereumjs/mpt'
-import { utf8ToBytes } from '@ethereumjs/util'
-import { encodeReceipt, TxReceipt } from '@ethereumjs/vm'
-import { bytesToHex, Hex, TransactionReceipt, numberToBytes } from 'viem'
+import { RLP } from '@ethereumjs/rlp'
+import { TransactionType as TransactionTypeEthereumJs } from '@ethereumjs/tx'
+import { concatBytes, hexToBytes, intToBytes } from '@ethereumjs/util'
+import {
+  bytesToHex,
+  Hex,
+  TransactionReceipt,
+  TransactionType as TransactionTypeViem,
+} from 'viem'
 
 type BuildReceiptTrieArgs = {
   receipts: TransactionReceipt[]
@@ -15,6 +21,38 @@ type BuildReceiptTrieReturn = {
   proofNodes: Hex[]
 }
 
+/**
+ * Convert a viem TransactionReceipt to ethereumjs TxReceipt format
+ * and encode it for the receipt trie
+ */
+function encodeViemReceipt(receipt: TransactionReceipt): Uint8Array {
+  const typeMap: Record<TransactionTypeViem, TransactionTypeEthereumJs> = {
+    legacy: TransactionTypeEthereumJs.Legacy,
+    eip2930: TransactionTypeEthereumJs.AccessListEIP2930,
+    eip1559: TransactionTypeEthereumJs.FeeMarketEIP1559,
+    eip4844: TransactionTypeEthereumJs.BlobEIP4844,
+    eip7702: TransactionTypeEthereumJs.EOACodeEIP7702,
+  }
+
+  const txType = typeMap[receipt.type] ?? 0
+
+  const logs = receipt.logs.map((log) => [
+    hexToBytes(log.address),
+    log.topics.map((topic) => hexToBytes(topic)),
+    hexToBytes(log.data),
+  ])
+
+  const encoded = RLP.encode([
+    // zk-wormholes are transactions after byzantium upgrade so status field exists
+    receipt.status === 'success' ? Uint8Array.from([1]) : Uint8Array.from([]),
+    hexToBytes(receipt.cumulativeGasUsed as any as Hex),
+    hexToBytes(receipt.logsBloom),
+    logs,
+  ])
+
+  return concatBytes(intToBytes(txType), encoded)
+}
+
 export async function buildReceiptTrie({
   receipts,
   receiptsRootHash,
@@ -23,9 +61,8 @@ export async function buildReceiptTrie({
   const trie = await createMPT()
 
   for (const receipt of receipts) {
-    const key = numberToBytes(receipt.transactionIndex)
-    // TODO: Find the right way to encode the receipt
-    const value = encodeReceipt(receipt as unknown as TxReceipt, receipt.type)
+    const key = RLP.encode(receipt.transactionIndex)
+    const value = encodeViemReceipt(receipt)
 
     await trie.put(key, value)
   }
@@ -34,11 +71,13 @@ export async function buildReceiptTrie({
 
   if (trieRoot.toLowerCase() !== receiptsRootHash.toLowerCase()) {
     throw new Error(
-      `Receipts root mismatch: expected ${receiptsRootHash}, got ${trieRoot}`,
+      `Receipts root mismatch: expected ${receiptsRootHash}, got after rebuild ${trieRoot}`,
     )
   }
 
-  const targetKey = utf8ToBytes(targetTxIndex)
+  // Convert target transaction index to RLP-encoded key
+  const targetTxIndexNum = Number(targetTxIndex)
+  const targetKey = RLP.encode(targetTxIndexNum)
   const proof = await createMerkleProof(trie, targetKey)
 
   return {
