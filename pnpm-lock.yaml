@@ -81,6 +81,9 @@ importers:
       '@ethereumjs/util':
         specifier: ^10.1.0
         version: 10.1.0
+      '@ethereumjs/vm':
+        specifier: ^10.1.0
+        version: 10.1.0
     devDependencies:
       '@eslint/js':
         specifier: ^9.13.0
@@ -1387,11 +1390,23 @@ packages:
     peerDependencies:
       viem: ^2.17.9
 
+  '@ethereumjs/binarytree@10.1.0':
+    resolution: {integrity: sha512-54n24oYJqgDk6DtXVjjGohjQCFCDgcvI2+AeNGRZcsQuz6yE2HYvxWq8VrAAcR8ja/gNc9eVYL51DvU93qK8Eg==}
+    engines: {node: '>=18'}
+
+  '@ethereumjs/block@10.1.0':
+    resolution: {integrity: sha512-W2GR/ejYn/idfX4fxQ2DRbrbOF5U04Q2wDiMuxtvnOr8zdVCBSlVYCC348N73ufkrqY5ltTlEUZYWLWWobcS/Q==}
+    engines: {node: '>=18'}
+
   '@ethereumjs/common@10.1.0':
     resolution: {integrity: sha512-zIHCy0i2LFmMDp+QkENyoPGxcoD3QzeNVhx6/vE4nJk4uWGNXzO8xJ2UC4gtGW4UJTAOXja8Z1yZMVeRc2/+Ew==}
 
   '@ethereumjs/common@3.2.0':
     resolution: {integrity: sha512-pksvzI0VyLgmuEF2FA/JR/4/y6hcPq8OUail3/AvycBaW1d5VSauOZzqGvJ3RTmR4MU35lWE8KseKOsEhrFRBA==}
+
+  '@ethereumjs/evm@10.1.0':
+    resolution: {integrity: sha512-RD6tjysXEWPfyBHmMxsg3s3T2JdbPVYvsDDDUR0laFaHWtHMnOeW/EIZ5njUx75nG+i72w34Sh6NhhkpkhMGDg==}
+    engines: {node: '>=18'}
 
   '@ethereumjs/mpt@10.1.0':
     resolution: {integrity: sha512-gWxx8n1OB2Js3EFWNeSdsUdYvw1P5WvdKxHmeq+giO03mt5fGRbuSh3ruXzreG4JRugpNSW6Dwqk+StVwjrQ4Q==}
@@ -1411,6 +1426,9 @@ packages:
     resolution: {integrity: sha512-DziebCdg4JpGlEqEdGgXmjqcFoJi+JGulUXwEjsZGAscAQ7MyD/7LE/GVCP29vEQxKc7AAwjT3A2ywHp2xfoCA==}
     engines: {node: '>=18'}
     hasBin: true
+
+  '@ethereumjs/statemanager@10.1.0':
+    resolution: {integrity: sha512-n4AB8olDocXtq/V6SClbZ5zEDfJL7cw3MmkGUb/MVQwJBgYZ143oll4UfGaK7jWQfF5Gth68KEJZQay5Hh3h6g==}
 
   '@ethereumjs/trie@6.2.1':
     resolution: {integrity: sha512-MguABMVi/dPtgagK+SuY57rpXFP+Ghr2x+pBDy+e3VmMqUY+WGzFu1QWjBb5/iJ7lINk4CI2Uwsih07Nu9sTSg==}
@@ -1434,6 +1452,10 @@ packages:
 
   '@ethereumjs/util@9.1.0':
     resolution: {integrity: sha512-XBEKsYqLGXLah9PNJbgdkigthkG7TAGvlD/sH12beMXEyHDyigfcbdvHhmLyDWgDyOJn4QwiQUaF7yeuhnjdog==}
+    engines: {node: '>=18'}
+
+  '@ethereumjs/vm@10.1.0':
+    resolution: {integrity: sha512-5OxHK4hdccDeSiBeSZj8WITl9uB6NbXA6/yf2wAPoflVxZKzOM5h6ssFrOAhz2faD130UoU62pnT23WClgrXSQ==}
     engines: {node: '>=18'}
 
   '@floating-ui/core@1.6.8':
@@ -1618,6 +1640,9 @@ packages:
 
   '@jridgewell/trace-mapping@0.3.31':
     resolution: {integrity: sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw==}
+
+  '@js-sdsl/ordered-map@4.4.2':
+    resolution: {integrity: sha512-iUKgm52T8HOE/makSxjqoWhe95ZJA1/G1sYsGev2JDKUSS14KAgg1LHb+Ba+IPow0xflbnSkOsZcO08C7w1gYw==}
 
   '@lit-labs/ssr-dom-shim@1.2.1':
     resolution: {integrity: sha512-wx4aBmgeGvFmOKucFKY+8VFJSYZxs9poN3SDNQFF6lT6NrQUnHiPB2PWz2sc4ieEcAaYYzN+1uWahEeTq2aRIQ==}
@@ -6772,7 +6797,7 @@ snapshots:
       '@babel/types': 7.28.5
       '@jridgewell/remapping': 2.3.5
       convert-source-map: 2.0.0
-      debug: 4.3.7
+      debug: 4.4.3
       gensync: 1.0.0-beta.2
       json5: 2.2.3
       semver: 6.3.1
@@ -7073,7 +7098,7 @@ snapshots:
   '@babel/plugin-syntax-async-generators@7.8.4(@babel/core@7.26.0)':
     dependencies:
       '@babel/core': 7.26.0
-      '@babel/helper-plugin-utils': 7.25.9
+      '@babel/helper-plugin-utils': 7.27.1
 
   '@babel/plugin-syntax-async-generators@7.8.4(@babel/core@7.28.5)':
     dependencies:
@@ -7083,7 +7108,7 @@ snapshots:
   '@babel/plugin-syntax-bigint@7.8.3(@babel/core@7.26.0)':
     dependencies:
       '@babel/core': 7.26.0
-      '@babel/helper-plugin-utils': 7.25.9
+      '@babel/helper-plugin-utils': 7.27.1
 
   '@babel/plugin-syntax-bigint@7.8.3(@babel/core@7.28.5)':
     dependencies:
@@ -7093,7 +7118,7 @@ snapshots:
   '@babel/plugin-syntax-class-properties@7.12.13(@babel/core@7.26.0)':
     dependencies:
       '@babel/core': 7.26.0
-      '@babel/helper-plugin-utils': 7.25.9
+      '@babel/helper-plugin-utils': 7.27.1
 
   '@babel/plugin-syntax-class-properties@7.12.13(@babel/core@7.28.5)':
     dependencies:
@@ -7103,7 +7128,7 @@ snapshots:
   '@babel/plugin-syntax-class-static-block@7.14.5(@babel/core@7.26.0)':
     dependencies:
       '@babel/core': 7.26.0
-      '@babel/helper-plugin-utils': 7.25.9
+      '@babel/helper-plugin-utils': 7.27.1
 
   '@babel/plugin-syntax-class-static-block@7.14.5(@babel/core@7.28.5)':
     dependencies:
@@ -7138,7 +7163,7 @@ snapshots:
   '@babel/plugin-syntax-import-attributes@7.26.0(@babel/core@7.26.0)':
     dependencies:
       '@babel/core': 7.26.0
-      '@babel/helper-plugin-utils': 7.25.9
+      '@babel/helper-plugin-utils': 7.27.1
 
   '@babel/plugin-syntax-import-attributes@7.26.0(@babel/core@7.28.5)':
     dependencies:
@@ -7148,7 +7173,7 @@ snapshots:
   '@babel/plugin-syntax-import-meta@7.10.4(@babel/core@7.26.0)':
     dependencies:
       '@babel/core': 7.26.0
-      '@babel/helper-plugin-utils': 7.25.9
+      '@babel/helper-plugin-utils': 7.27.1
 
   '@babel/plugin-syntax-import-meta@7.10.4(@babel/core@7.28.5)':
     dependencies:
@@ -7158,7 +7183,7 @@ snapshots:
   '@babel/plugin-syntax-json-strings@7.8.3(@babel/core@7.26.0)':
     dependencies:
       '@babel/core': 7.26.0
-      '@babel/helper-plugin-utils': 7.25.9
+      '@babel/helper-plugin-utils': 7.27.1
 
   '@babel/plugin-syntax-json-strings@7.8.3(@babel/core@7.28.5)':
     dependencies:
@@ -7178,7 +7203,7 @@ snapshots:
   '@babel/plugin-syntax-logical-assignment-operators@7.10.4(@babel/core@7.26.0)':
     dependencies:
       '@babel/core': 7.26.0
-      '@babel/helper-plugin-utils': 7.25.9
+      '@babel/helper-plugin-utils': 7.27.1
 
   '@babel/plugin-syntax-logical-assignment-operators@7.10.4(@babel/core@7.28.5)':
     dependencies:
@@ -7188,17 +7213,17 @@ snapshots:
   '@babel/plugin-syntax-nullish-coalescing-operator@7.8.3(@babel/core@7.26.0)':
     dependencies:
       '@babel/core': 7.26.0
-      '@babel/helper-plugin-utils': 7.25.9
+      '@babel/helper-plugin-utils': 7.27.1
 
   '@babel/plugin-syntax-nullish-coalescing-operator@7.8.3(@babel/core@7.28.5)':
     dependencies:
       '@babel/core': 7.28.5
-      '@babel/helper-plugin-utils': 7.25.9
+      '@babel/helper-plugin-utils': 7.27.1
 
   '@babel/plugin-syntax-numeric-separator@7.10.4(@babel/core@7.26.0)':
     dependencies:
       '@babel/core': 7.26.0
-      '@babel/helper-plugin-utils': 7.25.9
+      '@babel/helper-plugin-utils': 7.27.1
 
   '@babel/plugin-syntax-numeric-separator@7.10.4(@babel/core@7.28.5)':
     dependencies:
@@ -7208,7 +7233,7 @@ snapshots:
   '@babel/plugin-syntax-object-rest-spread@7.8.3(@babel/core@7.26.0)':
     dependencies:
       '@babel/core': 7.26.0
-      '@babel/helper-plugin-utils': 7.25.9
+      '@babel/helper-plugin-utils': 7.27.1
 
   '@babel/plugin-syntax-object-rest-spread@7.8.3(@babel/core@7.28.5)':
     dependencies:
@@ -7218,7 +7243,7 @@ snapshots:
   '@babel/plugin-syntax-optional-catch-binding@7.8.3(@babel/core@7.26.0)':
     dependencies:
       '@babel/core': 7.26.0
-      '@babel/helper-plugin-utils': 7.25.9
+      '@babel/helper-plugin-utils': 7.27.1
 
   '@babel/plugin-syntax-optional-catch-binding@7.8.3(@babel/core@7.28.5)':
     dependencies:
@@ -7228,17 +7253,17 @@ snapshots:
   '@babel/plugin-syntax-optional-chaining@7.8.3(@babel/core@7.26.0)':
     dependencies:
       '@babel/core': 7.26.0
-      '@babel/helper-plugin-utils': 7.25.9
+      '@babel/helper-plugin-utils': 7.27.1
 
   '@babel/plugin-syntax-optional-chaining@7.8.3(@babel/core@7.28.5)':
     dependencies:
       '@babel/core': 7.28.5
-      '@babel/helper-plugin-utils': 7.25.9
+      '@babel/helper-plugin-utils': 7.27.1
 
   '@babel/plugin-syntax-private-property-in-object@7.14.5(@babel/core@7.26.0)':
     dependencies:
       '@babel/core': 7.26.0
-      '@babel/helper-plugin-utils': 7.25.9
+      '@babel/helper-plugin-utils': 7.27.1
 
   '@babel/plugin-syntax-private-property-in-object@7.14.5(@babel/core@7.28.5)':
     dependencies:
@@ -7248,7 +7273,7 @@ snapshots:
   '@babel/plugin-syntax-top-level-await@7.14.5(@babel/core@7.26.0)':
     dependencies:
       '@babel/core': 7.26.0
-      '@babel/helper-plugin-utils': 7.25.9
+      '@babel/helper-plugin-utils': 7.27.1
 
   '@babel/plugin-syntax-top-level-await@7.14.5(@babel/core@7.28.5)':
     dependencies:
@@ -7820,7 +7845,7 @@ snapshots:
       '@babel/parser': 7.28.5
       '@babel/template': 7.27.2
       '@babel/types': 7.28.5
-      debug: 4.3.7
+      debug: 4.4.3
     transitivePeerDependencies:
       - supports-color
 
@@ -8080,6 +8105,28 @@ snapshots:
     dependencies:
       viem: 2.21.37(bufferutil@4.0.8)(typescript@5.6.2)(utf-8-validate@5.0.10)(zod@3.23.8)
 
+  '@ethereumjs/binarytree@10.1.0':
+    dependencies:
+      '@ethereumjs/rlp': 10.1.0
+      '@ethereumjs/util': 10.1.0
+      '@noble/hashes': 1.8.0
+      debug: 4.4.3
+      ethereum-cryptography: 3.2.0
+      lru-cache: 11.0.2
+    transitivePeerDependencies:
+      - supports-color
+
+  '@ethereumjs/block@10.1.0':
+    dependencies:
+      '@ethereumjs/common': 10.1.0
+      '@ethereumjs/mpt': 10.1.0
+      '@ethereumjs/rlp': 10.1.0
+      '@ethereumjs/tx': 10.1.0
+      '@ethereumjs/util': 10.1.0
+      ethereum-cryptography: 3.2.0
+    transitivePeerDependencies:
+      - supports-color
+
   '@ethereumjs/common@10.1.0':
     dependencies:
       '@ethereumjs/util': 10.1.0
@@ -8089,6 +8136,19 @@ snapshots:
     dependencies:
       '@ethereumjs/util': 8.1.0
       crc-32: 1.2.2
+
+  '@ethereumjs/evm@10.1.0':
+    dependencies:
+      '@ethereumjs/binarytree': 10.1.0
+      '@ethereumjs/common': 10.1.0
+      '@ethereumjs/statemanager': 10.1.0
+      '@ethereumjs/util': 10.1.0
+      '@noble/curves': 1.9.0
+      debug: 4.4.3
+      ethereum-cryptography: 3.2.0
+      eventemitter3: 5.0.1
+    transitivePeerDependencies:
+      - supports-color
 
   '@ethereumjs/mpt@10.1.0':
     dependencies:
@@ -8105,6 +8165,21 @@ snapshots:
   '@ethereumjs/rlp@4.0.1': {}
 
   '@ethereumjs/rlp@5.0.2': {}
+
+  '@ethereumjs/statemanager@10.1.0':
+    dependencies:
+      '@ethereumjs/binarytree': 10.1.0
+      '@ethereumjs/common': 10.1.0
+      '@ethereumjs/mpt': 10.1.0
+      '@ethereumjs/rlp': 10.1.0
+      '@ethereumjs/util': 10.1.0
+      '@js-sdsl/ordered-map': 4.4.2
+      '@noble/hashes': 1.8.0
+      debug: 4.4.3
+      ethereum-cryptography: 3.2.0
+      lru-cache: 11.0.2
+    transitivePeerDependencies:
+      - supports-color
 
   '@ethereumjs/trie@6.2.1':
     dependencies:
@@ -8147,6 +8222,22 @@ snapshots:
     dependencies:
       '@ethereumjs/rlp': 5.0.2
       ethereum-cryptography: 2.2.1
+
+  '@ethereumjs/vm@10.1.0':
+    dependencies:
+      '@ethereumjs/block': 10.1.0
+      '@ethereumjs/common': 10.1.0
+      '@ethereumjs/evm': 10.1.0
+      '@ethereumjs/mpt': 10.1.0
+      '@ethereumjs/rlp': 10.1.0
+      '@ethereumjs/statemanager': 10.1.0
+      '@ethereumjs/tx': 10.1.0
+      '@ethereumjs/util': 10.1.0
+      debug: 4.4.3
+      ethereum-cryptography: 3.2.0
+      eventemitter3: 5.0.1
+    transitivePeerDependencies:
+      - supports-color
 
   '@floating-ui/core@1.6.8':
     dependencies:
@@ -8442,8 +8533,8 @@ snapshots:
 
   '@jridgewell/remapping@2.3.5':
     dependencies:
-      '@jridgewell/gen-mapping': 0.3.5
-      '@jridgewell/trace-mapping': 0.3.25
+      '@jridgewell/gen-mapping': 0.3.13
+      '@jridgewell/trace-mapping': 0.3.31
 
   '@jridgewell/resolve-uri@3.1.2': {}
 
@@ -8465,6 +8556,8 @@ snapshots:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.0
+
+  '@js-sdsl/ordered-map@4.4.2': {}
 
   '@lit-labs/ssr-dom-shim@1.2.1': {}
 

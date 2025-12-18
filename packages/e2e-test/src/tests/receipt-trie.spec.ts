@@ -15,7 +15,7 @@ import {
 import { beforeAll, describe, it, expect } from 'vitest'
 import { envVars } from '@/envVars'
 import { L2NativeSuperchainERC20Abi } from '@/abi/L2NativeSuperchainERC20Abi'
-import { generateReceiptTrieProof } from '@/utils/receiptTrieProof'
+import { buildReceiptTrie } from '@/utils/receiptTrieProof'
 
 const testPrivateKey = generatePrivateKey()
 const testAccount = privateKeyToAccount(testPrivateKey)
@@ -42,7 +42,7 @@ describe('receipt trie', async () => {
 
   let receipt: TransactionReceipt
   let receipts: TransactionReceipt[]
-  let receiptRootHash: Hex
+  let receiptsRootHash: Hex
 
   beforeAll(async () => {
     // Deal 1000 ETH to the test account on each chain
@@ -135,83 +135,19 @@ describe('receipt trie', async () => {
       blockNumber: receipt.blockNumber,
     })
 
-    receiptRootHash = block.receiptsRoot
+    receiptsRootHash = block.receiptsRoot
 
     expect(block.receiptsRoot).toBeDefined()
     expect(receipts.length).toBeGreaterThanOrEqual(1)
   })
 
-  it.skip('should format data to build receipt-trie', async () => {
-    // Find the index of our receipt in the block
-    const receiptIndex = receipts.findIndex(
-      (r) => r.transactionHash === receipt.transactionHash,
-    )
-    expect(receiptIndex).toBeGreaterThanOrEqual(0)
+  it('should generate the local receipt trie correctly', async () => {
+    const { rootHash } = await buildReceiptTrie({
+      receipts,
+      receiptsRootHash,
+      targetTxIndex: numberToHex(receipt.transactionIndex),
+    })
 
-    // Generate the proof
-    const proof = await generateReceiptTrieProof(receipts, receiptIndex)
-
-    console.log('Receipt Trie Proof Generated:')
-    console.log('- Generated root:', proof.root)
-    console.log('- Key:', proof.key)
-    console.log('- Value length:', proof.value.length)
-    console.log('- Proof nodes:', proof.proofNodes.length)
-    console.log('- Proof node lengths:', proof.proofNodeLengths)
-    console.log('- Total proof length:', proof.proofNodesLength)
-
-    // Note: The generated root may not match block.receiptsRoot if Optimism uses custom receipt encoding
-    // For now, we verify the proof structure is correct
-    console.log('Root hash comparison:')
-    console.log('- Expected (from block):', receiptRootHash)
-    console.log('- Generated (from trie):', proof.root)
-    console.log(
-      '- Match:',
-      proof.root === receiptRootHash
-        ? '✓'
-        : '✗ (may be due to OP-specific encoding)',
-    )
-
-    expect(proof.root).toBeDefined()
-    expect(proof.proofNodes.length).toBeGreaterThan(0)
-  })
-
-  it.skip('should generate proof-of-inclusion in receipt trie', async () => {
-    const {
-      generateReceiptTrieProof,
-      verifyReceiptTrieProof,
-      formatProofForCircuit,
-    } = await import('@/utils/receiptTrieProof')
-
-    // Find the index of our receipt in the block
-    const receiptIndex = receipts.findIndex(
-      (r) => r.transactionHash === receipt.transactionHash,
-    )
-
-    // Generate the proof
-    const proof = await generateReceiptTrieProof(receipts, receiptIndex)
-
-    // Verify the proof is self-consistent (uses its own generated root)
-    const isValid = await verifyReceiptTrieProof(proof, proof.root)
-    expect(isValid).toBe(true)
-
-    // Format for circuit input
-    const circuitInput = formatProofForCircuit(proof)
-
-    console.log('\nCircuit Input Format:')
-    console.log('- root:', circuitInput.root)
-    console.log('- key:', circuitInput.key)
-    console.log('- value:', circuitInput.value.substring(0, 66) + '...')
-    console.log(
-      '- proofNodes (concatenated):',
-      circuitInput.proofNodes.substring(0, 66) + '...',
-    )
-    console.log('- proofNodeLengths:', circuitInput.proofNodeLengths)
-    console.log('- proofNodesLength:', circuitInput.proofNodesLength)
-
-    // These are the values you'll pass to your Circom circuit
-    expect(circuitInput.root).toBeDefined()
-    expect(circuitInput.key).toBeDefined()
-    expect(circuitInput.proofNodes).toBeDefined()
-    expect(circuitInput.proofNodeLengths.length).toBe(proof.proofNodes.length)
+    expect(rootHash).toBe(receiptsRootHash)
   })
 })
