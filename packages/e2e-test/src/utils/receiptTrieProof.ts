@@ -11,7 +11,6 @@ import {
 
 type BuildReceiptTrieArgs = {
   receipts: TransactionReceipt[]
-  receiptsRootHash: Hex
   targetTxIndex: Hex
 }
 
@@ -37,9 +36,9 @@ function encodeViemReceipt(receipt: TransactionReceipt): Uint8Array {
   const txType = typeMap[receipt.type] ?? 0
 
   const logs = receipt.logs.map((log) => [
-    hexToBytes(log.address),
-    log.topics.map((topic) => hexToBytes(topic)),
-    hexToBytes(log.data),
+    log.address,
+    log.topics.map((topic) => topic),
+    log.data,
   ])
 
   const encoded = RLP.encode([
@@ -55,7 +54,6 @@ function encodeViemReceipt(receipt: TransactionReceipt): Uint8Array {
 
 export async function buildReceiptTrie({
   receipts,
-  receiptsRootHash,
   targetTxIndex,
 }: BuildReceiptTrieArgs): Promise<BuildReceiptTrieReturn> {
   const trie = await createMPT()
@@ -69,19 +67,13 @@ export async function buildReceiptTrie({
 
   const trieRoot = bytesToHex(trie.root())
 
-  if (trieRoot.toLowerCase() !== receiptsRootHash.toLowerCase()) {
-    throw new Error(
-      `Receipts root mismatch: expected ${receiptsRootHash}, got after rebuild ${trieRoot}`,
-    )
-  }
-
   // Convert target transaction index to RLP-encoded key
   const targetTxIndexNum = Number(targetTxIndex)
   const targetKey = RLP.encode(targetTxIndexNum)
   const proof = await createMerkleProof(trie, targetKey)
 
   return {
-    rootHash: receiptsRootHash,
+    rootHash: trieRoot,
     key: bytesToHex(targetKey),
     proofNodes: proof.map((node) => bytesToHex(node)),
   }
